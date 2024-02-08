@@ -18,11 +18,28 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'fname',
+        'lname',
+        'profilePic',
+        'title',
+        'currentPost',
+        'industry',
+        'adress',
+        'phoneNumber',
         'email',
         'password',
+        'role_id',
+        'about',
     ];
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 
+    public function jobs()
+    {
+        return $this->belongsToMany(Job::class)->withTimestamps();
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

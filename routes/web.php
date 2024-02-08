@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +32,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware(['auth', 'role:1']);
+Route::get('/dashboard', [ApplicantController::class, 'index'])->name('dashboard')->middleware(['auth', 'role:2']);
+Route::get('/company/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');

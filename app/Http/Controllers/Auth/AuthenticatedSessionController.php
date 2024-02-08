@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Company;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -28,8 +30,25 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        $url = '';
+        $user = User::where('email', $request->email)->first();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        if ($user) {
+            if ($user->role) {
+                $url = 'admin/dashboard';
+            } else {
+                $url = 'applicant/dashboard';
+            }
+        } else {
+            $companyUser = Company::where('email', $request->email)->first();
+
+            if ($companyUser) {
+                $url = 'company/dashboard';
+            } else {
+                $url = 'login';
+            }
+        }
+        return redirect()->intended($url);
     }
 
     /**
