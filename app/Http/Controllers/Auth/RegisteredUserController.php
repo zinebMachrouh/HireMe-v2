@@ -31,21 +31,31 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+            'fname' => ['required', 'string', 'max:255'],
+            'lname' => ['required', 'string', 'max:255'],
+            'title' => ['required', 'string', 'max:255'],
+            'industry' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed'],
+            'profilePic' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+        $profilePicPath = $request->file('profilePic')->store('profile_pics', 'public');
 
         $user = User::create([
-            'name' => $request->name,
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'title' => $request->title,
+            'industry' => $request->industry,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'profilePic' => $profilePicPath,
+            'role_id' => 2
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
-    }
-}
+        return redirect('applicant/dashboard');
+    }}

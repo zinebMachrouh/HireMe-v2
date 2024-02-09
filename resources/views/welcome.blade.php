@@ -7,19 +7,19 @@
 @section('content')
     <section class="article">
         <header id="welcome">
-            <h2>J<img src="{{ asset('assets/logo.png') }}" alt="logo">bing</h2>
+            <h2>J<img src="{{ asset('assets/logo.png') }}" alt="logo">bling</h2>
             <nav>
                 <a href="{{route('welcome')}}">Home</a>
                 <a href="#">Dashboard</a>
                 <a href="#">Blog</a>
                 <a href="#">About</a>
                 <a href="#">Contact</a>
-                <a href="{{route('login')}}">LogIn</a>
+                <a href="{{route('register')}}">Register</a>
             </nav>
         </header>
         <main id="hero-section">
             <div class="left-hero">
-                <h1>Welcome to Jobing – Your Trusted Partner for Premium Services!</h1>
+                <h1>Welcome to Jobling – Your Trusted Partner for Premium Services!</h1>
                 <p>At HireMe, we pride ourselves on delivering top-notch services tailored to meet your unique needs.
                     Whether you're a business looking for professional solutions or an individual seeking personalized
                     services, we've got you covered</p>

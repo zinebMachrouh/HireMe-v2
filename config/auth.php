@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Admin;
+use App\Models\Applicant;
 use App\Models\Company;
 use App\Models\User;
 
@@ -83,12 +85,12 @@ return [
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => User::class,
+            'model' => Admin::class,
         ],
 
         'applicants' => [
             'driver' => 'eloquent',
-            'model' => User::class,
+            'model' => Applicant::class,
         ],
 
         'companies' => [
@@ -96,10 +98,6 @@ return [
             'model' => Company::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
 
     /*
