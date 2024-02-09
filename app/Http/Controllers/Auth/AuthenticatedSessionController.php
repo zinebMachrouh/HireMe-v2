@@ -31,16 +31,23 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         $url = '';
-        if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
-            $url = 'admin/dashboard';
-        } elseif (Auth::guard('applicant')->attempt($request->only('email', 'password'))) {
-            $url = 'applicant/dashboard';
-        } elseif (Auth::guard('company')->attempt($request->only('email', 'password'))) {
-            $url = 'company/dashboard';
-        } else {
-            $url = 'login';
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            if ($user->role_id === 1) {
+                $url = 'admin/dashboard';
+            } elseif ($user->role_id === 2) {
+                $url = 'applicant/dashboard';
+            } elseif ($user->role_id === 3) {
+                $url = 'company/dashboard';
+            } else {
+                $url = 'login';
+            }
+
+            return redirect()->intended($url);
         }
-        return redirect()->intended($url);
     }
 
     /**
@@ -56,5 +63,4 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
-
 }

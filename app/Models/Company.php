@@ -11,13 +11,8 @@ class Company extends Authenticatable
 {
     use Notifiable, HasFactory;
 
-    protected $fillable = [
-        'name',
-        'logo',
-        'slogan',
-        'industry',
-        'description',
-    ];
+    protected $guarded = [];
+
     public function jobs()
     {
         return $this->hasMany(Job::class);

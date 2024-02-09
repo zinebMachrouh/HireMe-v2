@@ -8,15 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Applicant extends Model
 {
     use HasFactory;
-    protected $fillble = [
-        'fname',
-        'lname',
-        'title',
-        'currentPost',
-        'industry',
-        'adress',
-        'about',
-    ];
+    protected $guarded = [];
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -37,25 +37,30 @@ class RegisteredUserController extends Controller
             'industry' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed'],
-            'profilePic' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
+            'picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-        $profilePicPath = $request->file('profilePic')->store('profile_pics', 'public');
+        $picturePath = $request->file('picture')->store('profile_pics', 'public');
 
         $user = User::create([
-            'fname' => $request->fname,
-            'lname' => $request->lname,
-            'title' => $request->title,
-            'industry' => $request->industry,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'profilePic' => $profilePicPath,
+            'picture' => $picturePath,
             'role_id' => 2
         ]);
 
+        $user->applicant()->create([
+            'fname' => $request->fname,
+            'lname' => $request->lname, 
+            'title' => $request->title,
+            'industry' => $request->industry,
+            'user_id' => $user->id
+        ]);
+        
         event(new Registered($user));
 
         Auth::login($user);
 
         return redirect('applicant/dashboard');
-    }}
+    }
+}

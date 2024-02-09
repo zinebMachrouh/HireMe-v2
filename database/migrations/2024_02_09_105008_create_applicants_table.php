@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('currentPost', 150)->nullable();
             $table->string('industry', 100)->nullable();
             $table->string('adress', 150)->nullable();
-            $table->integer('phoneNumber')->nullable();
             $table->longText('about')->nullable();
+            $table->foreignId('user_id')->constrained();
+
             $table->timestamps();
         });
     }

@@ -62,9 +62,9 @@
         </div>
         <!-- Profile Picture -->
         <div class="mt-4">
-            <x-input-label for="profilePic" :value="__('Profile Picture')" />
-            <input id="profilePic" class="block mt-1 w-full" type="file" name="profilePic" required />
-            <x-input-error :messages="$errors->get('profilePic')" class="mt-2" />
+            <x-input-label for="picture" :value="__('Profile Picture')" />
+            <input id="picture" class="block mt-1 w-full" type="file" name="picture" required />
+            <x-input-error :messages="$errors->get('picture')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-end mt-4">
