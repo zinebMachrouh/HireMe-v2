@@ -22,8 +22,8 @@ class Job extends Model
     {
         return $this->belongsTo(Company::class);
     }
-    public function users()
+    public function applicants()
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(Applicant::class)->withTimestamps();
     }
 }

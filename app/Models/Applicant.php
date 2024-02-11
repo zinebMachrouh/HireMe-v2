@@ -18,4 +18,8 @@ class Applicant extends Model
     {
         return $this->belongsToMany(Job::class)->withTimestamps();
     }
+    public function cv()
+    {
+        return $this->hasOne(CV::class);
+    }
 }

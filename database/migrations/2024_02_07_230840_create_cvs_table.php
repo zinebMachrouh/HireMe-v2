@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cvs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('applicant_id')->constrained();
             $table->json('hardSkills');
             $table->json('softSkills');
             $table->json('education');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('c_v_s');
+        Schema::dropIfExists('cvs');
     }
 };

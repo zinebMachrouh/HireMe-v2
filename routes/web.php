@@ -38,3 +38,4 @@ Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.d
 Route::get('/applicant/dashboard', [ApplicantController::class, 'index'])->name('applicant.dashboard')->middleware(['auth', 'role:2']);
 Route::get('/company/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
 
+Route::get('/applyJob/{id}', [ApplicantController::class, 'applyJob'])->name('applyJob');
