@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,3 +40,5 @@ Route::get('/applicant/dashboard', [ApplicantController::class, 'index'])->name(
 Route::get('/company/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
 
 Route::get('/applyJob/{id}', [ApplicantController::class, 'applyJob'])->name('applyJob');
+
+Route::get('/jobs/search', [JobController::class, 'searchJobs'])->name('jobs.search');

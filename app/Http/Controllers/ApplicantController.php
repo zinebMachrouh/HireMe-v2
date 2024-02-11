@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Job;
@@ -17,16 +18,16 @@ class ApplicantController extends Controller
 
         $jobs = Job::whereHas('company', function ($query) use ($userIndustry) {
             $query->where('industry', $userIndustry);
-        })
-        ->whereDoesntHave('applicants', function ($query) use ($userId) {
-            $query->where('applicant_id', $userId);
-        })
-        ->get();
-        return view('applicant.dashboard',compact('jobs'));
+        })->get();
+        return view('applicant.dashboard', compact('jobs'));
     }
 
-    public function applyJob($id){
+    public function applyJob($id)
+    {
         Auth::user()->applicant->jobs()->attach($id);
+        $job = Job::find($id);
+        $job->increment('visits');
+        $job->save();
         return redirect()->route('applicant.dashboard');
     }
 }

@@ -9,7 +9,8 @@
         <aside class="app-aside">
             <h2><img src="{{ asset('assets/light-logo.png') }}" alt="logo"></h2>
             <nav>
-                <a href="{{ route('welcome') }}" title="All Jobs" class="active"><i class="bi bi-grid-1x2-fill"></i></a>
+                <a href="{{ route('applicant.dashboard') }}" title="All Jobs" class="active"><i
+                        class="bi bi-grid-1x2-fill"></i></a>
                 <a href="#" title="All Companies"><i class="bi bi-buildings"></i></a>
                 <a href="#" title="Profile"><i class="bi bi-person-fill"></i></a>
                 <a href="#" title="My CV"><i class="bi bi-patch-check"></i></a>
@@ -24,11 +25,11 @@
             <div class="article-header">
                 <h1>Hello {{ Auth::user()->applicant->fname }} {{ Auth::user()->applicant->lname }}</h1>
                 <div class="header-right">
-                    <div class="search-bar">
-                        <input type="text" name="searchInput" id="searchInput" placeholder="Find The Perfect Job..."
-                            onkeydown="handleEnterKey(event)">
+                    <form action="{{ route('jobs.search') }}" method="GET" class="search-bar">
+                        <input type="text" name="search" id="search"
+                            placeholder="Find The Perfect Job..."{{ request('search') }}>
                         <i class="fa-solid fa-magnifying-glass"></i>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div class="article-main">
@@ -39,12 +40,12 @@
                             <div class="inner">
                                 <span class="pricing">
                                     <span>
-                                        {{$job->contract}}
+                                        {{ $job->contract }}
                                     </span>
                                 </span>
-                                <p class="sub-title">{{$job->company->name}}</p>
-                                <h4 class="title">{{$job->title}}</h4>
-                                <p class="info">{{$job->description}}.</p>
+                                <p class="sub-title">{{ $job->company->name }}</p>
+                                <h4 class="title">{{ $job->title }}</h4>
+                                <p class="info">{{ $job->description }}.</p>
                                 <ul class="features">
                                     <li>
                                         <span class="icon">
@@ -56,7 +57,7 @@
                                                 </path>
                                             </svg>
                                         </span>
-                                        <span>{{$job->location}}</span>
+                                        <span>{{ $job->location }}</span>
                                     </li>
                                     <li>
                                         <span class="icon">
@@ -68,7 +69,7 @@
                                                 </path>
                                             </svg>
                                         </span>
-                                        <span>{{$job->visits}} <strong>Applications</strong></span>
+                                        <span>{{ $job->visits }} <strong>Applications</strong></span>
                                     </li>
                                     <li>
                                         <span class="icon">
@@ -80,13 +81,17 @@
                                                 </path>
                                             </svg>
                                         </span>
-                                        <span>{{implode(' - ', json_decode($job->skills));}}</span>
+                                        <span>{{ implode(' - ', json_decode($job->skills)) }}</span>
                                     </li>
                                 </ul>
                                 <div class="action">
-                                    <a class="button" href="{{route('applyJob',$job->id)}}">
-                                        Apply To Job
-                                    </a>
+                                    @if ($job->applicants->contains(Auth::user()->applicant))
+                                        <span class="button">Applied</span>
+                                    @else
+                                        <a class="button" href="{{ route('applyJob', $job->id) }}">
+                                            Apply To Job
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
