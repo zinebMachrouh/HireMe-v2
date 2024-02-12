@@ -11,9 +11,9 @@
             <nav>
                 <a href="{{ route('applicant.dashboard') }}" title="All Jobs" class="active"><i
                         class="bi bi-grid-1x2-fill"></i></a>
-                <a href="#" title="All Companies"><i class="bi bi-buildings"></i></a>
+                <a href="{{ route('applicant.companies') }}" title="All Companies"><i class="bi bi-buildings"></i></a>
                 <a href="#" title="Profile"><i class="bi bi-person-fill"></i></a>
-                <a href="#" title="My CV"><i class="bi bi-patch-check"></i></a>
+                <a href="{{ route('createCV') }}" title="My CV"><i class="bi bi-file-earmark"></i></a>
                 <a href="#" title="Switch Account"><i class="bi bi-arrow-repeat"></i></a>
             </nav>
             <form method="POST" action="{{ route('logout') }}">
@@ -43,9 +43,12 @@
                                         {{ $job->contract }}
                                     </span>
                                 </span>
-                                <p class="sub-title">{{ $job->company->name }}</p>
-                                <h4 class="title">{{ $job->title }}</h4>
-                                <p class="info">{{ $job->description }}.</p>
+                                <div class="content">
+                                    <p class="sub-title">{{ $job->company->name }}</p>
+                                    <h4 class="title">{{ $job->title }}</h4>
+                                    <p class="info">{{ $job->description }}</p>
+
+                                </div>
                                 <ul class="features">
                                     <li>
                                         <span class="icon">

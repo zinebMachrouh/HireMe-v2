@@ -4,10 +4,10 @@ return [
 
     'apiKey' => env('MAILCHIMP_APIKEY'),
 
-    'defaultListName' => 'subscribers',
+    'defaultListName' => 'zinebMac',
 
     'lists' => [
-        'subscribers' => env('MAILCHIMP_LIST_ID'),
+        'zinebMac' => env('MAILCHIMP_LIST_ID'),
     ],
 
 ];

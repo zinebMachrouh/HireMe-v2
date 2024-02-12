@@ -34,11 +34,16 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
+Route::middleware(['auth', 'role:2'])->group(function () {
+    Route::get('/applyJob/{id}', [ApplicantController::class, 'applyJob'])->name('applyJob');
+    Route::get('/myCV', [ApplicantController::class, 'createCV'])->name('createCV');
+    Route::get('/download', [ApplicantController::class, 'downloadCV'])->name('downloadCV');
+    Route::get('/jobs/search', [JobController::class, 'searchJobs'])->name('jobs.search');
+    Route::get('/companies/search', [CompanyController::class, 'searchCompanies'])->name('companies.search');
+    Route::get('/applicant/dashboard', [ApplicantController::class, 'index'])->name('applicant.dashboard');
+    Route::get('/applicant/companies', [ApplicantController::class, 'getCompanies'])->name('applicant.companies');
+    Route::get('/subscribe', [ApplicantController::class, 'subscribe'])->name('subscribe');
+});
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware(['auth', 'role:1']);
-Route::get('/applicant/dashboard', [ApplicantController::class, 'index'])->name('applicant.dashboard')->middleware(['auth', 'role:2']);
+
 Route::get('/company/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
-
-Route::get('/applyJob/{id}', [ApplicantController::class, 'applyJob'])->name('applyJob');
-
-Route::get('/jobs/search', [JobController::class, 'searchJobs'])->name('jobs.search');
