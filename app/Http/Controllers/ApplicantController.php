@@ -38,18 +38,18 @@ class ApplicantController extends Controller
         return view('applicant.cv');
     }
 
-    // public function downloadCV()
-    // {
-    //     $name = Auth::user()->applicant->fname.' '. Auth::user()->applicant->lname;
-    //     $data = [
-    //         'title' => 'Sample PDF',
-    //         'content' => 'This is the content of the PDF.',
-    //     ];
+    public function downloadCV()
+    {
+        $name = Auth::user()->applicant->fname.' '. Auth::user()->applicant->lname;
+        $data = [
+            'title' => 'Sample PDF',
+            'content' => 'This is the content of the PDF.',
+        ];
 
-    //     $pdf = PDF::loadView('pdf.template', $data);
+        $pdf = PDF::loadView('pdf.template', $data);
 
-    //     return $pdf->download($name.'.pdf');
-    // }
+        return $pdf->download($name.'.pdf');
+    }
 
     public function getCompanies()
     {

@@ -68,9 +68,9 @@
                                 </div>
                             </div>
                             <div class="buttons">
-                                <button class="request" type="button">
-                                    View Details
-                                </button>
+                                <a class="request" href="{{route('getJobs',$company->id)}}">
+                                    View Offers
+                                </a>
                                 <a href="{{route('subscribe')}}"><i class="bi bi-plus-lg"></i></a>
                             </div>
                         </div>

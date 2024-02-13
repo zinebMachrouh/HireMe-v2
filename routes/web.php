@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 Route::middleware(['auth', 'role:2'])->group(function () {
     Route::get('/applyJob/{id}', [ApplicantController::class, 'applyJob'])->name('applyJob');
+    Route::get('/getJobs/{id}', [JobController::class, 'getJobs'])->name('getJobs');
     Route::get('/myCV', [ApplicantController::class, 'createCV'])->name('createCV');
     Route::get('/download', [ApplicantController::class, 'downloadCV'])->name('downloadCV');
     Route::get('/jobs/search', [JobController::class, 'searchJobs'])->name('jobs.search');

@@ -707,6 +707,10 @@ header nav a {
     padding: 0.5rem 1rem;
     font-size: 1rem;
     line-height: 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    background-color: var(--white);
+    color: var(--black);
     transition: all .3s ease;
 }
 
@@ -722,7 +726,7 @@ header nav a {
     margin-top: 1.5rem;
 }
 
-.buttons a {
+.buttons a:last-child {
     background-color: var(--med);
     border-radius: 0.5rem;
     padding: 0.5rem 0.9rem;
