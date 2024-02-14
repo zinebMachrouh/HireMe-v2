@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Applicant;
 use App\Models\Company;
 use App\Models\Job;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -38,34 +40,58 @@ class ApplicantController extends Controller
         return view('applicant.cv');
     }
 
-    public function downloadCV()
-    {
-        $name = Auth::user()->applicant->fname.' '. Auth::user()->applicant->lname;
-        $data = [
-            'title' => 'Sample PDF',
-            'content' => 'This is the content of the PDF.',
-        ];
+    // public function downloadCV()
+    // {
+    //     $name = Auth::user()->applicant->fname.' '. Auth::user()->applicant->lname;
+    //     $data = [
+    //         'title' => 'Sample PDF',
+    //         'content' => 'This is the content of the PDF.',
+    //     ];
 
-        $pdf = PDF::loadView('pdf.template', $data);
+    //     $pdf = PDF::loadView('pdf.template', $data);
 
-        return $pdf->download($name.'.pdf');
-    }
+    //     return $pdf->download($name.'.pdf');
+    // }
 
     public function getCompanies()
     {
         $userIndustry = Auth::user()->applicant->industry;
         $companies = Company::where('industry', $userIndustry)->withCount('jobs')->get();
         return view('applicant.companies', compact('companies'));
-
     }
 
-    public function subscribe()
+    // public function subscribe(Request $request)
+    // {
+    //     // try {
+    //         // Newsletter::subscribeOrUpdate($request->email);
+    //         $data = [];
+    //         $data = ['email'=> $request->email ,
+    //     'name'=>'zineb'];
+    //         Newsletter::subscribe($data['email']);
+    //         return redirect()->route('applicant.companies');
+    //     // } catch (\Exception $e) {
+    //     //     return redirect()->back()->with('error', $e->getMessage());
+    //     // }
+    // }
+    public function subscribe(Request $request)
     {
-        try {
-            Newsletter::subscribeOrUpdate(Auth::user()->email);
-            return redirect()->route('applicant.companies');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+        // dd($request);
+        $data = [
+            "_token" => "yoBjCyw53UwQuul3FIKE5jHTtn97pMGoVXp5webr",
+            "email" => $request->email
+        ];
+        if (!Newsletter::isSubscribed($data['email'])) {
+            Newsletter::subscribe($data['email']);
         }
+        return redirect()->back();
+    }
+    public function switchAccount()
+    {
+
+        Auth::user()->update([
+            'role_id' => 3
+        ]);
+        Auth::user()->applicant->delete();
+        return redirect()->route('registerCompany');
     }
 }

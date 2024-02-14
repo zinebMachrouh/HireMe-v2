@@ -2,12 +2,18 @@
 
 return [
 
-    'apiKey' => env('MAILCHIMP_APIKEY'),
+    'driver' => env('NEWSLETTER_DRIVER', Spatie\Newsletter\Drivers\MailChimpDriver::class),
+    'driver_arguments' => [
+        'api_key' => env('MAILCHIMP_APIKEY'),
 
-    'defaultListName' => 'zinebMac',
-
-    'lists' => [
-        'zinebMac' => env('MAILCHIMP_LIST_ID'),
+        'endpoint' => env('MAILCHIMP_ENDPOINT'),
     ],
 
+
+    'lists' => [
+
+        'subscribers' => [
+            'id' => env('MAILCHIMP_LIST_ID'),
+        ],
+    ],
 ];

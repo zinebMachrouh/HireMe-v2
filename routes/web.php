@@ -45,6 +45,12 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     Route::get('/applicant/companies', [ApplicantController::class, 'getCompanies'])->name('applicant.companies');
     Route::get('/subscribe', [ApplicantController::class, 'subscribe'])->name('subscribe');
 });
+Route::get('/switchAccount', [ApplicantController::class, 'switchAccount'])->name('switchAccount');
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard')->middleware(['auth', 'role:1']);
 
-Route::get('/company/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
+Route::middleware(['auth', 'role:3'])->group(function () {
+    Route::get('/company/dashboard', [CompanyController::class, 'index'])->name('company.dashboard');
+    Route::get('/company/register', [CompanyController::class, 'registerCompany'])->name('registerCompany');
+    
+    Route::post('/company/store',[CompanyController::class, 'store'])->name('store.company');
+});

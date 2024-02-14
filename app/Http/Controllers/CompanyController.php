@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -12,8 +13,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return view('company.dashboard');
-
+        $applicants = Company::find(Auth::user()->company->id)->jobs->flatMap->applicants;
+        return view('company.dashboard',compact('applicants'));
     }
     public function searchCompanies(Request $request)
     {
@@ -33,4 +34,30 @@ class CompanyController extends Controller
         return view('applicant.companies', compact('companies'));
     }
 
+    public function registerCompany()
+    {
+        return view('company.register');
+    }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'slogan' => ['required', 'string', 'max:255'],
+            'industry' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:255'],
+        ]);
+
+
+        $user = Auth::user();
+
+        $user->company()->create([
+            'name' => $request->name,
+            'slogan' => $request->slogan,
+            'industry' => $request->industry,
+            'description' => $request->description,
+            'user_id' => $user->id
+        ]);
+
+        return redirect()->route('company.dashboard');
+    }
 }
