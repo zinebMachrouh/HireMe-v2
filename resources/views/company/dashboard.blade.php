@@ -9,9 +9,9 @@
         <aside class="app-aside">
             <h2><img src="{{ asset('assets/light-logo.png') }}" alt="logo"></h2>
             <nav>
-                <a href="{{ route('applicant.dashboard') }}" title="All Jobs" class="active"><i
+                <a href="{{ route('company.dashboard') }}" title="All Applicants" class="active"><i
                         class="bi bi-grid-1x2-fill"></i></a>
-                <a href="{{ route('applicant.companies') }}" title="All Companies"><i class="bi bi-plus-lg"></i></a>
+                <a href="{{ route('job.create') }}" title="Add Offer"><i class="bi bi-plus-lg"></i></a>
             </nav>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -22,21 +22,21 @@
             <div class="article-header">
                 <h1>Hello {{ Auth::user()->company->name }}</h1>
             </div>
-            {{-- <div class="article-main">
+            <div class="article-main">
                 <h2>All Applicants</h2>
                 <div class="cards">
                     @foreach ($applicants as $app)
                         <div class="plan">
                             <div class="inner">
                                 <span class="pricing">
-                                    <span>
-                                        {{ $app->contract }}
-                                    </span>
+                                    @foreach ($app->jobs as $job)
+                                        <span>{{ $job->title }}</span>
+                                    @endforeach
                                 </span>
                                 <div class="content">
-                                    <p class="sub-title">{{ $app->company->name }}</p>
-                                    <h4 class="title">{{ $app->title }}</h4>
-                                    <p class="info">{{ $app->description }}</p>
+                                    <h4 class="sub-title">{{ $app->title }}</h4>
+                                    <p class="title">{{ $app->fname }} {{ $app->lname }}</p>
+                                    <p class="info">{{ $app->about }}</p>
 
                                 </div>
                                 <ul class="features">
@@ -50,7 +50,7 @@
                                                 </path>
                                             </svg>
                                         </span>
-                                        <span>{{ $app->location }}</span>
+                                        <span>{{ $app->user->email }}</span>
                                     </li>
                                     <li>
                                         <span class="icon">
@@ -62,7 +62,7 @@
                                                 </path>
                                             </svg>
                                         </span>
-                                        <span>{{ $app->visits }} <strong>Applications</strong></span>
+                                        <span>0{{ $app->user->phoneNumber }}</span>
                                     </li>
                                     <li>
                                         <span class="icon">
@@ -74,23 +74,17 @@
                                                 </path>
                                             </svg>
                                         </span>
-                                        <span>{{ implode(' - ', json_decode($app->skills)) }}</span>
+                                        <span>{{ $app->currentPost }}</span>
                                     </li>
                                 </ul>
                                 <div class="action">
-                                    @if ($app->applicants->contains(Auth::user()->applicant))
-                                        <span class="button">Applied</span>
-                                    @else
-                                        <a class="button" href="{{ route('applyJob', $job->id) }}">
-                                            Apply To Job
-                                        </a>
-                                    @endif
+                                    <span class="button">Download CV</span>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-            </div> --}}
+            </div>
         </article>
     </div>
 @endsection

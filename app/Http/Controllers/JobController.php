@@ -31,4 +31,8 @@ class JobController extends Controller
         $jobs = $company->jobs;
         return view('applicant.dashboard', compact('jobs'));
     }
+
+    public function create()  {
+        
+    }
 }

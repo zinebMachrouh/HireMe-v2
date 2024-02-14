@@ -514,7 +514,7 @@ header nav a {
     padding: 10px;
     background-color: var(--black);
     color: var(--white);
-    max-width: 350px;
+    width: 350px;
     height: 410px;
 }
 

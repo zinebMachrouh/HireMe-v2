@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Applicant;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,8 +14,12 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $applicants = Company::find(Auth::user()->company->id)->jobs->flatMap->applicants;
-        return view('company.dashboard',compact('applicants'));
+        $companyId = Auth::user()->company->id;
+
+        $applicants = Applicant::whereHas('jobs', function ($query) use ($companyId) {
+            $query->where('company_id', $companyId);
+        })->with('jobs')->get();
+        return view('company.dashboard', compact('applicants'));
     }
     public function searchCompanies(Request $request)
     {
