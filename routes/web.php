@@ -53,4 +53,7 @@ Route::middleware(['auth', 'role:3'])->group(function () {
     Route::get('/company/register', [CompanyController::class, 'registerCompany'])->name('registerCompany');
     
     Route::post('/company/store',[CompanyController::class, 'store'])->name('store.company');
+
+    Route::get('/company/jobs/create', [JobController::class, 'create'])->name('jobs.create');
+    Route::post('/company/jobs/store', [JobController::class, 'store'])->name('jobs.store');
 });

@@ -11,7 +11,7 @@
             <nav>
                 <a href="{{ route('company.dashboard') }}" title="All Applicants" class="active"><i
                         class="bi bi-grid-1x2-fill"></i></a>
-                <a href="{{ route('job.create') }}" title="Add Offer"><i class="bi bi-plus-lg"></i></a>
+                <a href="{{ route('jobs.create') }}" title="Add Offer"><i class="bi bi-plus-lg"></i></a>
             </nav>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
