@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('fname', 15);
             $table->string('lname', 15);
             $table->foreignId('user_id')->constrained();
-
+            $table->rememberToken();
             $table->timestamps();
         });
     }

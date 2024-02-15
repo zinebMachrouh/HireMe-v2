@@ -19,6 +19,7 @@ return new class extends Migration
             $table->mediumText('description');
             $table->foreignId('user_id')->constrained();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

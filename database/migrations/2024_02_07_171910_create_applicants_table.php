@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('adress', 150)->nullable();
             $table->longText('about')->nullable();
             $table->foreignId('user_id')->constrained();
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }

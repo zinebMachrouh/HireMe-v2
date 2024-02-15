@@ -20,6 +20,8 @@ return new class extends Migration
             $table->integer('visits')->default(0);
             $table->string('location');
             $table->foreignId('company_id')->constrained();
+            $table->softDeletes();
+
             $table->timestamps();
         });
     }

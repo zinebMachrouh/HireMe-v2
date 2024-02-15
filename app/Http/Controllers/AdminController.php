@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Applicant;
+use App\Models\Company;
+use App\Models\Job;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -11,7 +14,17 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $data = [
+            'applicants' => Applicant::count(),
+            'jobs' => Job::count(),
+            'applications' => Applicant::whereHas('jobs')->count(),
+            'companies' => Company::count(),
+        ];
+        
+        return view('admin.dashboard', compact('data'));
     }
-
+    public function getCompanies(){
+        $companies = Company::withCount('jobs')->get();
+        return view('admin.companies', compact('companies'));
+    }
 }
