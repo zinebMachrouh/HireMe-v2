@@ -49,7 +49,7 @@ class RegisteredUserController extends Controller
             'role_id' => 2
         ]);
 
-        $user->applicant()->create([
+        $applicant = $user->applicant()->create([
             'fname' => $request->fname,
             'lname' => $request->lname, 
             'title' => $request->title,
@@ -57,6 +57,10 @@ class RegisteredUserController extends Controller
             'user_id' => $user->id
         ]);
         
+        $applicant->cv()->create([
+            'applicant_id' => $applicant->id
+        ]);
+
         event(new Registered($user));
 
         Auth::login($user);

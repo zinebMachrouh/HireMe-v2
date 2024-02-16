@@ -68,9 +68,11 @@
                                 </div>
                             </div>
                             <div class="buttons">
-                                <a href="{{ route('company.delete', $company) }}">
-                                    Archive
-                                </a>
+                                <form action="{{route('company.delete', $company) }}">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit">Archive</button>
+                                </form>
                             </div>
                         </div>
                     @endforeach

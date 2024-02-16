@@ -27,4 +27,8 @@ class AdminController extends Controller
         $companies = Company::withCount('jobs')->get();
         return view('admin.companies', compact('companies'));
     }
+    public function getJobs(){
+        $jobs = Job::get();
+        return view('admin.jobs', compact('jobs'));
+    }
 }

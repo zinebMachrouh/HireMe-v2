@@ -65,9 +65,10 @@ class CompanyController extends Controller
 
         return redirect()->route('company.dashboard');
     }
-    
-    public function destroy(Company $company){
-        $company->delete(); 
+
+    public function destroy(Company $company)
+    {
+        $company->delete();
 
         return redirect()->route('admin.companies');
     }

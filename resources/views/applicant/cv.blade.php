@@ -13,7 +13,7 @@
                 <a href="{{ route('applicant.companies') }}" title="All Companies"><i class="bi bi-buildings"></i></a>
                 <a href="#" title="Profile"><i class="bi bi-person-fill"></i></a>
                 <a href="{{ route('createCV') }}" title="My CV" class="active"><i class="bi bi-file-earmark"></i></a>
-                <a href="{{ route('switchAccount')}}" title="Switch Account"><i class="bi bi-arrow-repeat"></i></a>
+                <a href="{{ route('switchAccount') }}" title="Switch Account"><i class="bi bi-arrow-repeat"></i></a>
             </nav>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -34,29 +34,46 @@
             <div class="article-main">
                 <h2>My CV</h2>
                 <div class="my-cv">
-                    <form action="" method="post">
+                    <form action="{{route('update.cv')}}" method="post">
+                        @csrf
+                        @method('put')
                         <div class="mb-3">
+                            <label for="currentPost" class="form-label">Current Post</label>
+                            <textarea class="form-control" name="currentPost" id="currentPost" rows="3">{{ implode(',', json_decode(optional(Auth::user()->applicant)->currentPost) ?? ['-']) }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="about" class="form-label">About</label>
+                            <textarea class="form-control" name="about" id="about" rows="3">{{ implode(',', json_decode(optional(Auth::user()->applicant)->about) ?? ['-']) }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="adress" class="form-label">Adress</label>
+                            <textarea class="form-control" name="adress" id="adress" rows="3">{{ implode(',', json_decode(optional(Auth::user()->applicant)->adress) ?? ['-']) }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <textarea class="form-control" name="phoneNumber" id="phoneNumber" rows="3">{{ implode(',', json_decode(optional(Auth::user())->phoneNumber) ?? ['-']) }}</textarea>
+                        </div>
                             <label for="hardSkills" class="form-label">Hard Skills</label>
-                            <textarea class="form-control" name="hardSkills" id="hardSkills" rows="3">{{ implode(',',json_decode(Auth::user()->applicant->cv->hardSkills)?? ['-']) }}</textarea>
+                            <textarea class="form-control" name="hardSkills" id="hardSkills" rows="3">{{ implode(',', json_decode(optional(Auth::user()->applicant->cv)->hardSkills) ?? ['-']) }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="softSkills" class="form-label">Soft Skills</label>
-                            <textarea class="form-control" name="softSkills" id="softSkills" rows="3">{{ implode(',',json_decode(Auth::user()->applicant->cv->softSkills)?? ['-']) }}</textarea>
+                            <textarea class="form-control" name="softSkills" id="softSkills" rows="3">{{ implode(',', json_decode(optional(Auth::user()->applicant->cv)->softSkills) ?? ['-']) }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="education" class="form-label">Education</label>
-                            <textarea class="form-control" name="education" id="education" rows="3">{{ implode(',',json_decode(Auth::user()->applicant->cv->education)?? ['-']) }}</textarea>
+                            <textarea class="form-control" name="education" id="education" rows="3">{{ implode(',', json_decode(optional(Auth::user()->applicant->cv)->education) ?? ['-']) }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="languages" class="form-label">Languages</label>
-                            <textarea class="form-control" name="languages" id="languages" rows="3">{{ implode(',',json_decode(Auth::user()->applicant->cv->languages)?? ['-']) }}</textarea>
+                            <textarea class="form-control" name="languages" id="languages" rows="3">{{ implode(',', json_decode(optional(Auth::user()->applicant->cv)->languages) ?? ['-']) }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="experiences" class="form-label">Experiences</label>
-                            <textarea class="form-control" name="experiences" id="experiences" rows="3">{{ implode(',',json_decode(Auth::user()->applicant->cv->experiences)?? ['-']) }}</textarea>
+                            <textarea class="form-control" name="experiences" id="experiences" rows="3">{{ implode(',', json_decode(optional(Auth::user()->applicant->cv)->experiences) ?? ['-']) }}</textarea>
                         </div>
                         <button type="submit">Update</button>
-                        <a href="{{route('downloadCV')}}">Download</a>
+                        <a href="{{ route('downloadCV', Auth::user()->applicant) }}">Download</a>
                     </form>
                 </div>
             </div>

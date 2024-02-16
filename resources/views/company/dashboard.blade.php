@@ -78,7 +78,11 @@
                                     </li>
                                 </ul>
                                 <div class="action">
-                                    <span class="button">Download CV</span>
+                                    <form action="{{ route('applicant.delete', $app) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit">Archive</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

@@ -59,4 +59,10 @@ class JobController extends Controller
 
         return redirect()->route('company.dashboard');
     }
+    public function destroy(Job $job)
+    {
+        $job->delete();
+
+        return redirect()->route('admin.jobs');
+    }
 }

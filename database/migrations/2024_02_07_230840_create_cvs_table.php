@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('c_v_s', function (Blueprint $table) {
             $table->id();
             $table->foreignId('applicant_id')->constrained();
-            $table->json('hardSkills');
-            $table->json('softSkills');
-            $table->json('education');
-            $table->json('languages');
-            $table->json('experiences');
+            $table->json('hardSkills')->nullable();
+            $table->json('softSkills')->nullable();
+            $table->json('education')->nullable();
+            $table->json('languages')->nullable();
+            $table->json('experiences')->nullable();
             $table->timestamps();
         });
     }

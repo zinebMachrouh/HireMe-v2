@@ -8,7 +8,9 @@ use App\Models\Job;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade as PDF;
+// use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Spatie\Newsletter\Facades\Newsletter;
 
 class ApplicantController extends Controller
@@ -40,18 +42,18 @@ class ApplicantController extends Controller
         return view('applicant.cv');
     }
 
-    // public function downloadCV()
-    // {
-    //     $name = Auth::user()->applicant->fname.' '. Auth::user()->applicant->lname;
-    //     $data = [
-    //         'title' => 'Sample PDF',
-    //         'content' => 'This is the content of the PDF.',
-    //     ];
+    public function downloadCV(Applicant $applicant)
+    {
+        $name = $applicant->fname.' '. $applicant->lname;
+        $data = [
+            'title' => 'Sample PDF',
+            'content' => 'This is the content of the PDF.',
+        ];
 
-    //     $pdf = PDF::loadView('pdf.template', $data);
+        $pdf =PDF::loadView('pdf.template', $data);
 
-    //     return $pdf->download($name.'.pdf');
-    // }
+        return $pdf->download($name.'.pdf');
+    }
 
     public function getCompanies()
     {
@@ -60,19 +62,6 @@ class ApplicantController extends Controller
         return view('applicant.companies', compact('companies'));
     }
 
-    // public function subscribe(Request $request)
-    // {
-    //     // try {
-    //         // Newsletter::subscribeOrUpdate($request->email);
-    //         $data = [];
-    //         $data = ['email'=> $request->email ,
-    //     'name'=>'zineb'];
-    //         Newsletter::subscribe($data['email']);
-    //         return redirect()->route('applicant.companies');
-    //     // } catch (\Exception $e) {
-    //     //     return redirect()->back()->with('error', $e->getMessage());
-    //     // }
-    // }
     public function subscribe(Request $request)
     {
         // dd($request);
@@ -93,5 +82,30 @@ class ApplicantController extends Controller
         ]);
         Auth::user()->applicant->delete();
         return redirect()->route('registerCompany');
+    }
+    public function update(Request $request)
+    {
+        $user = Auth::user();
+        $applicant = $user->applicant;
+
+        $user->update([
+            'phoneNumber' => $request->input('phoneNumber'),
+        ]);
+
+        $applicant->update([
+            'currentPost' =>  $request->input('currentPost'),
+            'about' => $request->input('about'),
+            'adress' => $request->input('adress'),
+        ]);
+
+        $cv = $applicant->cv;
+        $cv->update([
+            'hardSkills' => json_encode(explode(',', $request->input('hardSkills', []))),
+            'softSkills' => json_encode(explode(',', $request->input('softSkills', []))),
+            'education' => json_encode(explode(',', $request->input('education', []))),
+            'languages' => json_encode(explode(',', $request->input('languages', []))),
+            'experiences' => json_encode(explode(',', $request->input('experiences', []))),
+        ]);
+        return redirect()->route('applicant.dashboard');
     }
 }
