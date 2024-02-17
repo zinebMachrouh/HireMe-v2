@@ -38,7 +38,7 @@ Route::middleware(['auth', 'role:2'])->group(function () {
     Route::get('/applyJob/{id}', [ApplicantController::class, 'applyJob'])->name('applyJob');
     Route::get('/getJobs/{id}', [JobController::class, 'getJobs'])->name('getJobs');
     Route::get('/myCV', [ApplicantController::class, 'createCV'])->name('createCV');
-    Route::get('/download/{applicant}', [ApplicantController::class, 'downloadCV'])->name('downloadCV');
+    Route::get('/download/{user}', [ApplicantController::class, 'downloadCV'])->name('downloadCV');
     Route::get('/jobs/search', [JobController::class, 'searchJobs'])->name('jobs.search');
     Route::get('/companies/search', [CompanyController::class, 'searchCompanies'])->name('companies.search');
     Route::get('/applicant/dashboard', [ApplicantController::class, 'index'])->name('applicant.dashboard');

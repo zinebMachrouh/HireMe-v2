@@ -42,17 +42,14 @@ class ApplicantController extends Controller
         return view('applicant.cv');
     }
 
-    public function downloadCV(Applicant $applicant)
+    public function downloadCV(User $user)
     {
-        $name = $applicant->fname.' '. $applicant->lname;
+        $name = $user->applicant->fname . ' ' . $user->applicant->lname;
         $data = [
-            'title' => 'Sample PDF',
-            'content' => 'This is the content of the PDF.',
+            'user' => $user
         ];
-
-        $pdf =PDF::loadView('pdf.template', $data);
-
-        return $pdf->download($name.'.pdf');
+        $pdf = PDF::loadView('pdf.template', $data);
+        return $pdf->download($name . '.pdf');
     }
 
     public function getCompanies()

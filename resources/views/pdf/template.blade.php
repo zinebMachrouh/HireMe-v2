@@ -171,121 +171,83 @@
     <title>MyCV</title>
 </head>
 
-  <body>
+<body>
     <div class="cv">
-      <div class="rect"></div>
-      <div class="big-rect"></div>
-      <aside>
-        <div class="info">
-          <img src="profile.jpg" alt="profile" />
-          <div class="name">
-            <h4>Adam</h4>
-            <h2>Prittchet</h2>
-            <p>Full-Stack Developer</p>
-          </div>
-        </div>
-        <div class="contact">
-          <h4 class="title">Contacts</h4>
-          <div class="col">
-            <div class="row">
-              <h4 class="bi bi-telephone-fill"></h4>
-              <p>+212610203040</p>
+        <div class="rect"></div>
+        <div class="big-rect"></div>
+        <aside>
+            <img src="{{asset($user->picture)}}" alt="profile" />
+            <div class="name">
+                <h4>{{ $user->applicant->fname }}</h4>
+                <h2>{{ $user->applicant->lname }}</h2>
+                <p>{{ $user->applicant->currentPost }}</p>
             </div>
-            <div class="row">
-              <h4 class="bi bi-envelope-fill"></h4>
-              <p>adamprit9@gmail.com</p>
+        </aside>
+        <article>
+            <div class="contact">
+                <h4 class="title">Contacts</h4>
+                <div class="col">
+                    <div class="row">
+                        <h4 class="bi bi-telephone-fill"></h4>
+                        <p>{{ $user->phoneNumber }}</p>
+                    </div>
+                    <div class="row">
+                        <h4 class="bi bi-envelope-fill"></h4>
+                        <p>{{ $user->email }}</p>
+                    </div>
+                    <div class="row">
+                        <h4 class="bi bi-geo-alt-fill"></h4>
+                        <p>{{ $user->applicant->adress }}</p>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-              <h4 class="bi bi-geo-alt-fill"></h4>
-              <p>123 Lilly Street, New York</p>
+            <!-- Skills -->
+            <div class="skills">
+                <h4 class="title">Skills</h4>
+                <ul>
+                    @foreach (json_decode($user->applicant->cv->hardSkills) as $skill)
+                        <li>{{ $skill }}</li>
+                    @endforeach
+                    @foreach (json_decode($user->applicant->cv->softSkills) as $skill)
+                        <li>{{ $skill }}</li>
+                    @endforeach
+                </ul>
             </div>
-          </div>
-        </div>
-        <div class="skills">
-          <h4 class="title">Skills</h4>
-          <ul>
-            <li>responsive web design</li>
-            <li>front-end developement</li>
-            <li>back-end developement</li>
-            <li>illustrator</li>
-            <li>graphic design</li>
-            <li>photography</li>
-          </ul>
-        </div>
-        <div class="lang">
-          <h4 class="title">Languages</h4>
-          <ul>
-            <li>english</li>
-            <li>frensh</li>
-            <li>spanish</li>
-            <li>arabic</li>
-          </ul>
-        </div>
-      </aside>
-      <article>
-        <div class="profile">
-          <h4 class="title" style="margin: 0px">profile</h4>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Natus
-            tempora ipsam reprehenderit magnam est doloremque, repudiandae
-            laboriosam. Laudantium excepturi reiciendis iure, accusantium
-            eveniet sint aliquid autem quaerat. Quae, quo deleniti.
-          </p>
-        </div>
-        <div class="work">
-          <h4 class="title" style="margin-top: 50px">work experience</h4>
-          <div class="col" style="margin-top: 20px">
-            <p>2011-2014</p>
-            <h4>JR. Full-Stack Developer</h4>
-            <p>Company Name</p>
-            <p class="lorem">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga
-              nulla laudantium nisi, amet eius saepe!
-            </p>
-          </div>
-          <div class="col">
-            <p>2014-2016</p>
-            <h4>SR. Full-Stack Developer</h4>
-            <p>Company Name</p>
-            <p class="lorem">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga
-              nulla laudantium nisi, amet eius saepe!
-            </p>
-          </div>
-          <div class="col">
-            <p>2016-present</p>
-            <h4>Creative Director</h4>
-            <p>Company Name</p>
-            <p class="lorem">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Fuga
-              nulla laudantium nisi, amet eius saepe!
-            </p>
-          </div>
-        </div>
-        <div class="edu">
-          <h4 class="title">Education</h4>
-          <div class="col">
-            <p>2000</p>
-            <h4>Diploma in Web Developement</h4>
-            <p>University of name,US</p>
-          </div>
-          <div class="col">
-            <p>2004</p>
-            <h4>Bachelor of Full-Stack Developement</h4>
-            <p>University of name,New York</p>
-          </div>
-        </div>
-        <div class="hob">
-          <h4 class="title">Hobbies</h4>
-          <ul>
-            <li>Swimming</li>
-            <li>Reading</li>
-            <li>Painting</li>
-          </ul>
-        </div>
-      </article>
-      <div class="rect-btm"></div>
+            <!-- Languages -->
+            <div class="lang">
+                <h4 class="title">Languages</h4>
+                <ul>
+                    @foreach (json_decode($user->applicant->cv->languages) as $language)
+                        <li>{{ $language }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <!-- Profile -->
+            <div class="profile">
+                <h4 class="title" style="margin: 0px">Profile</h4>
+                <p>{{ $user->applicant->about }}</p>
+            </div>
+            <!-- Work Experience -->
+            <div class="work">
+                <h4 class="title" style="margin-top: 50px">Work Experience</h4>
+                @foreach (json_decode($user->applicant->cv->experiences) as $experience)
+                    <div class="col" style="margin-top: 20px">
+                        <p>{{ $experience }}</p>
+                    </div>
+                @endforeach
+            </div>
+            <!-- Education -->
+            <div class="edu">
+                <h4 class="title">Education</h4>
+                @foreach (json_decode($user->applicant->cv->education) as $education)
+                    <div class="col">
+                        <p>{{ $education }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </article>
+        <div class="rect-btm"></div>
     </div>
-  </body>
+</body>
 
 </html>
