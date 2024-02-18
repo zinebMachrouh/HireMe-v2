@@ -105,4 +105,10 @@ class ApplicantController extends Controller
         ]);
         return redirect()->route('applicant.dashboard');
     }
+    public function destroy(Applicant $applicant)
+    {
+        $applicant->delete();
+
+        return redirect()->route('admin.applicants');
+    }
 }

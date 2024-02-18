@@ -51,7 +51,7 @@
                 <a href="{{ route('admin.dashboard') }}" title="Statistics" class="active"><i
                         class="fa-solid fa-chart-pie"></i></a>
                 <a href="{{ route('admin.companies') }}" title="All Companies"><i class="bi bi-buildings"></i></a>
-                <a href="#" title="All Applicants"><i class="bi bi-people-fill"></i></a>
+                <a href="{{ route('admin.applicants') }}" title="All Applicants"><i class="bi bi-people-fill"></i></a>
                 <a href="{{ route('createCV') }}" title="All Jobs"><i class="bi bi-file-earmark"></i></a>
             </nav>
             <form method="POST" action="{{ route('logout') }}">

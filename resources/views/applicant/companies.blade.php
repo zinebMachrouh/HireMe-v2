@@ -60,7 +60,7 @@
                                         <p class="flex">
                                             Applications
                                             <span class="state-value">
-                                                455
+                                                {{$company->visits}}
                                             </span>
                                         </p>
 

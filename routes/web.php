@@ -62,6 +62,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/companies', [AdminController::class, 'getCompanies'])->name('admin.companies');
     Route::get('/admin/jobs', [AdminController::class, 'getJobs'])->name('admin.jobs');
+    Route::get('/admin/applicants', [AdminController::class, 'getApplicants'])->name('admin.applicants');
     Route::delete('company/delete/{company}', [CompanyController::class, 'destroy'])->name('company.delete');
     Route::delete('job/delete/{job}', [JobController::class, 'destroy'])->name('job.delete');
+    Route::delete('applicant/delete/{applicant}', [ApplicantController::class, 'destroy'])->name('applicant.delete');
 });

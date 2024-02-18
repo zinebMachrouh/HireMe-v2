@@ -26,49 +26,37 @@
                 <div class="header-right">
                     <form action="{{ route('companies.search') }}" method="GET" class="search-bar">
                         <input type="text" name="search" id="search"
-                            placeholder="Find The Perfect Company..."{{ request('search') }}>
+                            placeholder="Beautiful People In Here..."{{ request('search') }}>
                         <i class="fa-solid fa-magnifying-glass"></i>
                     </form>
                 </div>
             </div>
             <div class="article-main">
-                <h2>All Companies</h2>
+                <h2>All Applicants</h2>
                 <div class="cards">
 
-                    @foreach ($companies as $company)
+                    @foreach ($applicants as $app)
                         <div class="card">
                             <div class="infos">
                                 <div class="image">
-                                    <img src="{{ asset('storage/' . $company->user->picture) }}" alt="picture">
+                                    <img src="{{ asset('storage/' . $app->user->picture) }}" alt="picture">
                                 </div>
                                 <div class="comp">
                                     <div>
                                         <p class="name">
-                                            {{ $company->name }}
+                                            {{ $app->fname }} {{ $app->lname }}
                                         </p>
-                                        <p class="function">
-                                            {{ $company->industry }}
+                                        <p class="function" style="margin-top:7px;">
+                                            {{ $app->title }}
                                         </p>
-                                    </div>
-                                    <div class="stats">
-                                        <p class="flex flex-col">
-                                            Offers
-                                            <span class="state-value">
-                                                {{ $company->jobs_count }}
-                                            </span>
+                                        <p style="color: #fff; margin-top:7px;">
+                                            {{ $app->user->email }}
                                         </p>
-                                        <p class="flex">
-                                            Applications
-                                            <span class="state-value">
-                                                {{$company->visits}}
-                                            </span>
-                                        </p>
-
                                     </div>
                                 </div>
                             </div>
                             <div class="buttons">
-                                <form action="{{route('company.delete', $company) }}" style="width: 100%" method="POST">
+                                <form action="{{ route('applicant.delete', $app) }}" style="width: 100%" method="POST">
                                     @csrf
                                     @method('delete')
                                     <button class="request"  type="submit">Archive</button>

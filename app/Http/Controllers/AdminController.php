@@ -17,7 +17,7 @@ class AdminController extends Controller
         $data = [
             'applicants' => Applicant::count(),
             'jobs' => Job::count(),
-            'applications' => Applicant::whereHas('jobs')->count(),
+            'applications' => Job::sum('visits'),
             'companies' => Company::count(),
         ];
         
@@ -30,5 +30,9 @@ class AdminController extends Controller
     public function getJobs(){
         $jobs = Job::get();
         return view('admin.jobs', compact('jobs'));
+    }
+    public function getApplicants(){
+        $applicants = Applicant::get();
+        return view('admin.applicants', compact('applicants'));
     }
 }

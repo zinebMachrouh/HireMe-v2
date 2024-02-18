@@ -87,7 +87,7 @@
                                     </li>
                                 </ul>
                                 <div class="action">
-                                    <form action="{{ route('job.delete', $job) }}">
+                                    <form action="{{ route('job.delete', $job) }}" method="POST">
                                         @csrf
                                         @method('delete')
                                         <button type="submit">Archive</button>
