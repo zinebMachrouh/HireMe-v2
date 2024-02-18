@@ -78,11 +78,7 @@
                                     </li>
                                 </ul>
                                 <div class="action">
-                                    <form action="{{ route('applicant.delete', $app) }}">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit">Archive</button>
-                                    </form>
+                                    <a href="{{ route('downloadCV', $app->user) }}" class="request">Download CV</a>
                                 </div>
                             </div>
                         </div>

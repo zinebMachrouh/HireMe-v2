@@ -11,8 +11,8 @@
             <nav>
                 <a href="{{ route('applicant.dashboard') }}" title="All Jobs"><i class="bi bi-grid-1x2-fill"></i></a>
                 <a href="{{ route('applicant.companies') }}" title="All Companies"><i class="bi bi-buildings"></i></a>
-                <a href="#" title="Profile"><i class="bi bi-person-fill"></i></a>
                 <a href="{{ route('createCV') }}" title="My CV" class="active"><i class="bi bi-file-earmark"></i></a>
+                <a href="{{ route('downloadCV', Auth::user()) }}"><i class="bi bi-download"></i></a>
                 <a href="{{ route('switchAccount') }}" title="Switch Account"><i class="bi bi-arrow-repeat"></i></a>
             </nav>
             <form method="POST" action="{{ route('logout') }}">
@@ -34,12 +34,12 @@
             <div class="article-main">
                 <h2>My CV</h2>
                 <div class="my-cv">
-                    <form action="{{route('update.cv')}}" method="post">
+                    <form action="{{ route('update.cv') }}" method="post">
                         @csrf
                         @method('put')
                         <div class="mb-3">
                             <label for="currentPost" class="form-label">Current Post</label>
-                            <textarea class="form-control" name="currentPost" id="currentPost" rows="3">{{ Auth::user()->applicant->currentPost ?? '-'}}</textarea>
+                            <textarea class="form-control" name="currentPost" id="currentPost" rows="3">{{ Auth::user()->applicant->currentPost ?? '-' }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="about" class="form-label">About</label>
@@ -47,12 +47,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="adress" class="form-label">Adress</label>
-                            <textarea class="form-control" name="adress" id="adress" rows="3">{{ Auth::user()->applicant->adress ?? '-'}}</textarea>
+                            <textarea class="form-control" name="adress" id="adress" rows="3">{{ Auth::user()->applicant->adress ?? '-' }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Phone Number</label>
-                            <textarea class="form-control" name="phoneNumber" id="phoneNumber" rows="3">{{ Auth::user()->phoneNumber ?? '-'}}</textarea>
+                            <textarea class="form-control" name="phoneNumber" id="phoneNumber" rows="3">{{ Auth::user()->phoneNumber ?? '-' }}</textarea>
                         </div>
+                        <div class="mb-3">
                             <label for="hardSkills" class="form-label">Hard Skills</label>
                             <textarea class="form-control" name="hardSkills" id="hardSkills" rows="3">{{ implode(',', json_decode(optional(Auth::user()->applicant->cv)->hardSkills) ?? ['-']) }}</textarea>
                         </div>
@@ -73,7 +74,6 @@
                             <textarea class="form-control" name="experiences" id="experiences" rows="3">{{ implode(',', json_decode(optional(Auth::user()->applicant->cv)->experiences) ?? ['-']) }}</textarea>
                         </div>
                         <button type="submit">Update</button>
-                        <a href="{{ route('downloadCV', Auth::user()) }}">Download</a>
                     </form>
                 </div>
             </div>

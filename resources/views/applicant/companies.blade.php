@@ -10,10 +10,10 @@
             <h2><img src="{{ asset('assets/light-logo.png') }}" alt="logo"></h2>
             <nav>
                 <a href="{{ route('applicant.dashboard') }}" title="All Jobs"><i class="bi bi-grid-1x2-fill"></i></a>
-                <a href="#" title="All Companies" class="active"><i class="bi bi-buildings"></i></a>
-                <a href="#" title="Profile"><i class="bi bi-person-fill"></i></a>
-                <a href="{{ route('createCV') }}" title="My CV"><i class="bi bi-file-earmark"></i></a>
-                <a href="#" title="Switch Account"><i class="bi bi-arrow-repeat"></i></a>
+                <a href="{{ route('applicant.companies') }}" title="All Companies"><i class="bi bi-buildings"></i></a>
+                <a href="{{ route('createCV') }}" title="My CV" class="active"><i class="bi bi-file-earmark"></i></a>
+                <a href="{{ route('downloadCV', Auth::user()) }}"><i class="bi bi-download"></i></a>
+                <a href="{{ route('switchAccount') }}" title="Switch Account"><i class="bi bi-arrow-repeat"></i></a>
             </nav>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
